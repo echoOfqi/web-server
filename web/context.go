@@ -27,8 +27,10 @@ type Context struct {
 func NewContext(w http.ResponseWriter, r *http.Request) *Context {
 	bodyByte, _ := io.ReadAll(r.Body)
 	body := make(map[string]string)
-	if err := json.Unmarshal(bodyByte, &body); err != nil {
-		http.Error(w, err.Error(), 500)
+	if len(bodyByte) > 0 {
+		if err := json.Unmarshal(bodyByte, &body); err != nil {
+			http.Error(w, err.Error(), 500)
+		}
 	}
 	return &Context{
 		Writer:  w,
