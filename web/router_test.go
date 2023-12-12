@@ -8,11 +8,11 @@ import (
 
 func newTestRouter() *router {
 	r := newRouter()
-	r.addRouter("GET", "/", nil)
-	r.addRouter("GET", "/hello/:name", nil)
-	r.addRouter("GET", "/hello/b/c", nil)
-	r.addRouter("GET", "/hi/:name", nil)
-	r.addRouter("GET", "/assets/*filepath", nil)
+	r.addRoute("GET", "/", nil)
+	r.addRoute("GET", "/hello/:name", nil)
+	r.addRoute("GET", "/hello/b/c", nil)
+	r.addRoute("GET", "/hi/:name", nil)
+	r.addRoute("GET", "/assets/*filepath", nil)
 	return r
 }
 
@@ -27,7 +27,7 @@ func TestParsePattern(t *testing.T) {
 
 func TestGetRouter(t *testing.T) {
 	r := newTestRouter()
-	n, ps := r.getRouter("GET", "/hello/geektutu")
+	n, ps := r.getRoute("GET", "/hello/geektutu")
 
 	if n == nil {
 		t.Fatal("nil shouldn't be returned")
