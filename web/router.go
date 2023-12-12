@@ -7,13 +7,13 @@ import (
 
 type router struct {
 	roots    map[string]*node
-	handlers map[string]HandFunc
+	handlers map[string]HandlerFunc
 }
 
 func newRouter() *router {
 	return &router{
 		roots:    make(map[string]*node),
-		handlers: make(map[string]HandFunc)}
+		handlers: make(map[string]HandlerFunc)}
 }
 
 // Only one * is allowed
@@ -32,7 +32,7 @@ func parsePattern(pattern string) []string {
 	return parts
 }
 
-func (r *router) addRoute(method string, pattern string, handler HandFunc) {
+func (r *router) addRoute(method string, pattern string, handler HandlerFunc) {
 	parts := parsePattern(pattern)
 	key := method + "-" + pattern
 	_, ok := r.roots[method]
