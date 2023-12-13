@@ -1,12 +1,26 @@
 package main
 
 import (
+	"log"
 	"net/http"
+	"time"
 	"web"
 )
 
+func onlyForV2() web.HandlerFunc {
+	return func(c *web.Context) {
+		// Start timer
+		t := time.Now()
+		// if a server error occurred
+		c.Fail(500, "Internal Server Error")
+		// Calculate resolution time
+		log.Printf("[%d] %s in %v for group v2", c.StatusCode, c.Request.RequestURI, time.Since(t))
+	}
+}
+
 func main() {
 	r := web.NewEngine()
+	r.Use(web.Logger())
 	r.GET("/index", func(c *web.Context) {
 		c.HTML(http.StatusOK, "<h1>index Page</h1>")
 	})
@@ -24,6 +38,7 @@ func main() {
 	}
 
 	v2 := r.Group("/v2")
+	v2.Use(onlyForV2())
 	{
 		v2.POST("/login", func(c *web.Context) {
 			c.JSON(http.StatusOK, web.H{
