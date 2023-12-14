@@ -78,10 +78,6 @@ func main() {
 		})
 	}
 
-	r.GET("/assets/*filepath", func(c *web.Context) {
-		c.JSON(http.StatusOK, web.H{"filepath": c.Param("filepath")})
-	})
-
 	r.GET("/students", func(c *web.Context) {
 		c.HTML(http.StatusOK, "arr.tmpl", web.H{
 			"title":  "gee",
