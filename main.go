@@ -33,6 +33,7 @@ func FormatAsDate(t time.Time) string {
 func main() {
 	r := web.NewEngine()
 	r.Use(web.Logger())
+	r.Use(web.Recovery())
 	r.SetFuncMap(template.FuncMap{
 		"FormatAsDate": FormatAsDate,
 	})
@@ -90,6 +91,11 @@ func main() {
 			"title": "gee",
 			"now":   time.Date(2019, 8, 17, 0, 0, 0, 0, time.UTC),
 		})
+	})
+
+	r.GET("/panic", func(c *web.Context) {
+		names := []string{"geektutu"}
+		c.String(http.StatusOK, names[100])
 	})
 
 	r.Run(":9999")
