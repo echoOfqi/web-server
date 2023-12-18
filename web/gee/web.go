@@ -1,4 +1,4 @@
-package web
+package gee
 
 import (
 	"html/template"
@@ -24,7 +24,7 @@ type RouterGroup struct {
 	engine      *Engine
 }
 
-// NewEngine is constructor of web.Engine
+// NewEngine is constructor of gee.Engine
 func NewEngine() *Engine {
 	engine := &Engine{router: newRouter()}
 	engine.RouterGroup = &RouterGroup{engine: engine}
