@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-var db = map[string]string{
+var dbs = map[string]string{
 	"Tom":  "630",
 	"Jack": "589",
 	"Sam":  "567",
@@ -16,7 +16,7 @@ func main() {
 	NewGroup("scores", 2<<10, GetterFunc(
 		func(key string) ([]byte, error) {
 			log.Println("[SlowDB] search key", key)
-			if v, ok := db[key]; ok {
+			if v, ok := dbs[key]; ok {
 				return []byte(v), nil
 			}
 			return nil, fmt.Errorf("%s not exist", key)
